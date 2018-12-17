@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 
-@Configuration
+//@Configuration
 public class DruidConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(DruidConfiguration.class);
@@ -21,7 +21,7 @@ public class DruidConfiguration {
     /**
      * 使用druid监控，注册类 StatViewServlet和filterRegistrationBean
      */
-    @Bean
+//    @Bean
     public ServletRegistrationBean druidServlet() {
         logger.info("----------------init Druid Servlet Configuration ");
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
@@ -37,7 +37,7 @@ public class DruidConfiguration {
         return servletRegistrationBean;
     }
 
-    @Bean
+//    @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
         filterRegistrationBean.addUrlPatterns("/*");
@@ -45,7 +45,7 @@ public class DruidConfiguration {
         return filterRegistrationBean;
     }
 
-    @ConfigurationProperties(prefix = "spring.datasource")
+//    @ConfigurationProperties(prefix = "spring.datasource")
     class IDataSourceProperties {
         private String url;
         private String username;
@@ -66,7 +66,7 @@ public class DruidConfiguration {
         private String filters;
         private String connectionProperties;
 
-        @Bean
+//        @Bean
         public DataSource dataSource() {
             DruidDataSource datasource = new DruidDataSource();
             datasource.setUrl(url);
