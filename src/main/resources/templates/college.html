@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学院信息录入</title>
+
+</head>
+<body>
+<!-- 保存区域 开始-->
+<form id="collegeForm" method="post" enctype="multipart/form-data" >
+    <table>
+        <tr>
+            <td align="right" class="panel-title">
+                学院名称:
+            </td>
+            <td >
+                <input class="easyui-validatebox" type="text" name="typeName"  id="typeName" maxlength="50" required="required" style="width:300px;" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="panel-title">
+                学院地址:
+            </td>
+            <td >
+                <input class="easyui-validatebox" type="text" name="typeName"  id="typeName" maxlength="50" required="required" style="width:300px;" />
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="panel-title">
+                创办时间:
+            </td>
+            <td >
+                <input class="easyui-validatebox" type="text" name="typeName"  id="typeName" maxlength="50" required="required" style="width:300px;" />
+                格式:(YYYY-MM-DD)
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" class="panel-title"  >
+                创办时间:
+            </td>
+            <td >
+                <t ><input type="button"  id="tb_upload"  value="上传文件"/></td>
+            </td>
+        </tr>
+        <tr>
+            <td  colspan="2" >
+                校徽回显区域<img id="upImg" alt="" src=""/>
+            </td>
+
+        </tr>
+        <tr align="center">
+            <td colspan="2">
+                <input type="button" id="save"  value="保存"/>
+                <input type="button" id="cancleForm" value="取消"/>
+            </td>
+        </tr>
+        <input type="hidden" name="cpic" id="cpic" />
+    </table>
+</form>
+
+<div id="w_upload" class="easyui-window" title="学院院徽上传" style="width:370px;height:160px;display:none;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true" >
+    <fieldset>
+        <legend>上传说明</legend>
+        <span>
+					<font color='blue'>
+						上传后缀名仅支持图片格式，请控制文件上传在10M内
+					</font>
+					<a href="<%=basePath%>/college/upload.shtml"></a>
+				</span>
+    </fieldset>
+    <form id="upload" method="post" enctype ="multipart/form-data">
+        <table width='99%'>
+            <tr align="center">
+                <td><input type="file" name="uploadFile" data-options="required:true" id="uploadFile"/></td>
+            </tr>
+            <tr align="center">
+                <td>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="btnUpload">提交</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#w_upload').window('close')">取消</a>
+                </td>
+            </tr>
+        </table>
+
+
+    </form>
+</div>
+
+<!-- 保存区域结束 -->
+
+
+
+<script type="text/javascript">
+
+    $("#save").click(function(){
+        $("#collegeForm").form('submit',{
+            url:'<%=basePath %>/college/doSave.shtml',
+            onSubmit: function(){
+                var isValid = $(this).form('validate');
+                if (!isValid){
+                    $.messager.progress('close');
+                }
+                return isValid;
+            },
+            success:function(data){
+                //提示成功
+            }
+        });
+    });
+
+    //点击上传按钮打开上传插件
+    $("#tb_upload").click(function(){
+        $("#w_upload").window('open');
+        $("#w_upload").show();
+    });
+    //文件上传，并进行信息回显
+    $("#btnUpload").click(function(){
+        $.messager.progress();
+        $("#upload").form('submit',{
+            url:'<%=basePath %>/college/upload.shtml',
+            onSubmit: function(){
+                var isValid = $(this).form('validate');
+                if (!isValid){
+                    $.messager.progress('close');
+                }
+                return isValid;
+            },
+            success:function(data){
+                var data = eval('(' + data + ')');
+                $.messager.progress('close');
+                //上传后关闭窗口
+                $("#w_upload").window('close');
+                //修改img，显示上传的校徽
+                var imgadress="<%=basePath %>/resources/uploadFile/" + data.fileAdress;
+                $("#upImg").attr("src",imgadress);
+                //修改表单隐藏域 保存图片路径
+                $("#cpic").val(imgadress);
+            }
+        })
+    });
+
+</script>
+
+</body>
+</html>
