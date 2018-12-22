@@ -1,15 +1,13 @@
 package com.sunone.springboot.mapper;
 
-import com.sunone.springboot.entity.College;
 import com.sunone.springboot.entity.SysNav;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
-@Mapper
 public interface SysNavMapper {
 
     @Insert("insert into admin_nav(parentId,text,href,state) values({#parentId},{#text},{#href},{#state})")

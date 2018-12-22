@@ -45,7 +45,7 @@ public class DruidConfiguration {
         return filterRegistrationBean;
     }
 
-//    @ConfigurationProperties(prefix = "spring.datasource")
+//    @ConfigurationProperties(prefix = "spring.datasource.druid")
     class IDataSourceProperties {
         private String url;
         private String username;

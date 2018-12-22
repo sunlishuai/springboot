@@ -14,6 +14,7 @@ public class SysNavServiceImpl implements SysNavService {
     SysNavMapper sysNavMapper;
     @Override
     public List<Map<String, Object>> getAllNav(Long id) {
+        System.out.println("-----sysNavMapper------ is null"+ sysNavMapper );
         return sysNavMapper.getAllNav(id);
     }
 
